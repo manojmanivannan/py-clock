@@ -51,8 +51,8 @@ class TimeFonts:
         'six'       : [9,   0,  3],
         'seven'     : [6,   0,  5],
         'nine'      : [7,   0,  4],
-        'TEN'       : [0,   9,  12],
-        'ten'       : [10,  0,  3],
+        'ten'       : [0,   9,  12],
+        'TEN'       : [10,  0,  3],
         'eleven'    : [8,   6,  12],
         'twelve'    : [6,   6,  12],
         'fifteen'   : [1,   2,  9],
@@ -70,7 +70,8 @@ class TimeFonts:
 
     def __init__(self,time_sentence) -> None:
         self.time_sentence = time_sentence
-        # self.time_sentence = "it is half past eleven"
+        self.time_sentence = "it is ten minutes to twelve"
+        self.time_sentence = "it is ten o'clock"
         self.get_word_locations()
 
     def get_word_locations(self):
@@ -87,7 +88,7 @@ class TimeFonts:
             if each_word == 'half': each_word = 'thirty'
 
             logger.debug(f'Checking word "{each_word}" in one {["".join(s) for s in self.all_lines]}')
-            logger.debug(f'--------------------------------------')
+            
 
             # check that word in each line
             for each_line in self.all_lines:
@@ -103,6 +104,7 @@ class TimeFonts:
 
                     # if match is found break
                     break
+            logger.debug(f'--------------------------------------')
     
     def clean_locations(self,locations):
 

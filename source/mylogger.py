@@ -3,7 +3,7 @@ import logging
 #logging.basicConfig(format=FORMAT)
 logger = logging.getLogger('PYCLOCK')
 logger.propagate = False
-logger.setLevel('INFO')
+logger.setLevel('DEBUG')
 ch = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
