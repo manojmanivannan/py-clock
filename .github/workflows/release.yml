@@ -24,4 +24,4 @@ jobs:
                 source ./venv/bin/activate
                 python -m pip install -r requirements.txt
                 python setup.py install
-                py-clock -s -m
+                py-clock -s -m -d

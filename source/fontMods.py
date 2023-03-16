@@ -70,8 +70,10 @@ class TimeFonts:
 
     def __init__(self,time_sentence) -> None:
         self.time_sentence = time_sentence
-        self.time_sentence = "it is ten minutes to twelve"
-        self.time_sentence = "it is ten o'clock"
+        # self.time_sentence = "it is ten minutes to twelve"
+        # self.time_sentence = "it is ten o'clock"
+        # self.time_sentence = "it is five minutes past zero"
+        # self.time_sentence = "it is zero o'clock"
         self.get_word_locations()
 
     def get_word_locations(self):
@@ -86,6 +88,7 @@ class TimeFonts:
             # corner case
             if each_word == 'quarter': each_word = 'fifteen'
             if each_word == 'half': each_word = 'thirty'
+            if each_word == 'zero': each_word = 'twelve'
 
             logger.debug(f'Checking word "{each_word}" in one {["".join(s) for s in self.all_lines]}')
             
