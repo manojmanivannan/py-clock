@@ -13,10 +13,10 @@ def main(show,upper,matrix):
     if show:
         
         if matrix:
-            logger.info('Getting current time as matrix')
+            logger.debug('Getting current time as matrix')
             TimeGenerator('upper' if upper else 'lower').print_time_matrix()
         else:
-            logger.info('Getting current time as sentence')
+            logger.debug('Getting current time as sentence')
             TimeGenerator('upper' if upper else 'lower').print_time()
 
 if __name__ == '__main__':

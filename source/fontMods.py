@@ -1,8 +1,8 @@
 from .mylogger import logger
 
-# 0   ITLISASTHPMA
+# 0   ITLISASTHTEN
 # 1   ACFIFTEENDCO
-# 2   TWENTYFIVEXW
+# 2   TWENTYXFIVEW
 # 3   THIRTYFTENOS
 # 4   MINUTESETOUR
 # 5   PASTORUFOURT
@@ -26,9 +26,9 @@ class TimeFonts:
     END         = '\033[0m'    
 
     #          0   1   2   3   4   5   6    7   8   9   10  11  12
-    line0 =  ["I","T","L","I","S","A","S", "T","H","P","M","A"," "]
+    line0 =  ["I","T","L","I","S","A","S", "T","H","T","E","N"," "]
     line1 =  ["A","C","F","I","F","T","E", "E","N","D","C","O"," "]
-    line2 =  ["T","W","E","N","T","Y","F", "I","V","E","X","W"," "]
+    line2 =  ["T","W","E","N","T","Y","X", "F","I","V","E","W"," "]
     line3 =  ["T","H","I","R","T","Y","F", "T","E","N","O","S"," "]
     line4 =  ["M","I","N","U","T","E","S", "E","T","O","U","R"," "]
     line5 =  ["P","A","S","T","O","R","U", "F","O","U","R","T"," "]
@@ -46,17 +46,31 @@ class TimeFonts:
         'one'       : [9,   8,  11],
         'two'       : [7,   9,  -1],
         'three'     : [9,   3,  8],
+        'four'      : [5,   7,  11],
+        'five'      : [2,   7,  11],
         'six'       : [9,   0,  3],
+        'seven'     : [6,   0,  5],
+        'nine'      : [7,   0,  4],
+        'TEN'       : [0,   9,  12],
+        'ten'       : [10,  0,  3],
+        'eleven'    : [8,   6,  12],
+        'twelve'    : [6,   6,  12],
+        'fifteen'   : [1,   2,  9],
+        'quarter'   : [1,   2,  9],
         'twenty'    : [2,   0,  6],
-        'half'      : [0,   0,  5], # Fix it, half does not exists
+        'thirty'    : [3,   0,  6],
+        'half'      : [3,   0,  6],
         'minutes'   : [4,   0,  7],
+        'past'      : [5,   0,  4],
         'to'        : [4,   8,  10],
+        "o'clock"   : [10,  6,  12]
 
         
     }
 
     def __init__(self,time_sentence) -> None:
         self.time_sentence = time_sentence
+        # self.time_sentence = "it is half past eleven"
         self.get_word_locations()
 
     def get_word_locations(self):
@@ -67,90 +81,103 @@ class TimeFonts:
         self.word_locations = []
         for each_word in self.time_sentence.split(' '):
 
-            logger.debug(f'Checking word "{each_word}" in lines')
+
+            # corner case
+            if each_word == 'quarter': each_word = 'fifteen'
+            if each_word == 'half': each_word = 'thirty'
+
+            logger.debug(f'Checking word "{each_word}" in one {["".join(s) for s in self.all_lines]}')
             logger.debug(f'--------------------------------------')
 
             # check that word in each line
             for each_line in self.all_lines:
 
-                # logger.debug(f'Checking in line {"".join(each_line).lower()}')
-
                 if each_word.lower() in ''.join(each_line).lower():
 
-                    logger.debug(f'MATCH found for {each_word.lower()} in {"".join(each_line).lower()}')
+                    logger.debug(f'MATCH found for "{each_word.lower()}" in {"".join(each_line).lower()}')
                     word_location = self.time_key_maps.get(each_word.lower())
 
                     if word_location is not None:
-                        logger.debug(f'Appending location of {each_word.lower()}')
+                        logger.debug(f'Appending location of "{each_word.lower()}":{word_location}')
                         self.word_locations.append(word_location)
 
                     # if match is found break
                     break
     
-    def clean_location(self,locations):
-        locations = [   [0,   0,  2],
-                        [0,   3,  5],
-                        [2,   0,  6], 
-                        [4,   0,  7], 
-                        [9,   3,  8]
-                    ]
-        cleaned_locations = []
+    def clean_locations(self,locations):
 
-        def get_column(matrix, i):
-            return [row[i] for row in matrix]
+        logger.debug(f'Attempting to clean {locations}')
+        # Group the inner lists by their first element using a dictionary
+        temp_dict = {}
+        for inner_list in locations:
+            key = inner_list[0]
+            value = inner_list[1:]
+            if key not in temp_dict:
+                temp_dict[key] = []
+            temp_dict[key].append(value)
 
-        def indices(lst, item):
-            return [i for i, x in enumerate(lst) if x == item]
+        # Convert the dictionary to the desired format
+        new_list = []
+        for key, value in temp_dict.items():
+            new_list.append([key] + value)
 
+        # remove duplicates
+        new_list = [[x[0]] + list(set(map(tuple, x[1:]))) for x in new_list]
 
-        index_col = get_column(locations,0)
-        duplicates = (dict((x, indices(index_col, x)) for x in set(index_col) if index_col.count(x) > 1))
-        
-        logger.debug(f'Duplicates found {duplicates}')
-
-        for dup in duplicates:
-            tmp = [dup]
-            for each in duplicates[dup]:
-                logger.debug(f'For duplicate item {each} | {locations[each]}')
-                tmp.append([locations[each][1],locations[each][2]])
-                logger.debug(f'Before delting {locations}')
-                del locations[0]
-            cleaned_locations.append(tmp)
-
-
-        for loc in locations:
-            cleaned_locations.append(loc)
-        
-
-        logger.debug(cleaned_locations)
-
-            
+        #sort the words
+        new_list = [[x[0]] + sorted(x[1:], key=lambda y: y[0]) for x in new_list]
+        logger.debug(f'Cleaned locations {new_list}')
+        return new_list
 
 
     def show(self):
         
-        # locations = self.get_word_locations 
-        # each item in this list is a word
-        
-        locations = self.clean_location([   [0,   0,  2],
-                        [0,   3,  5],
-                        [2,   0,  6], 
-                        [4,   0,  7], 
-                        [9,   3,  8]
-                    ])
-        logger.debug(locations)
+        # self.word_locations = [[0, 0, 2], [0, 3, 5], [0,   9,  12], [10, 0, 3], [4, 0, 7], [4, 8, 10], [10, 0, 3]]
+        # self.word_locations = [[0, 0, 2], [0, 3, 5], [3,   0,  6],[5, 0, 4], [8, 6, 12]]
+        # [[0, [0, 2], [3, 5]], [10, [0, 3], [0, 3]], [4, [0, 7], [8, 10]]]
+        locations = self.clean_locations(self.word_locations)
 
         for line_no,line in enumerate(self.all_lines):
-            logger.debug(f'line #{line_no}')
-            for word_loc in locations:
-                if word_loc[0] == line_no:
-                    logger.debug(f'{word_loc}')
-                    print(self.CYAN + 
-                            " ".join(self.all_lines[line_no][word_loc[1]:word_loc[2]]) + 
-                            " " +  
-                            self.END + 
-                            " ".join(self.all_lines[line_no][word_loc[2]:])
-                            )
+            # logger.debug(f'line #{line_no}: {line}')
+            if line_no not in [s[0] for s in locations]:
+                logger.debug(f'{line_no} not required {locations}')
+                print(" ".join(line))
+            else:
+                for word_loc in locations:
+                    if word_loc[0] == line_no:
+                        logger.debug(f'{word_loc}')
+                        words = word_loc[1:]
+                        if len(words)==2:
+                            logger.debug(f'Two words {words}')
+                            print(self.CYAN + self.BOLD + 
+                                    " ".join(line[words[0][0]:words[0][1]]) + self.END + " " +  
+                                    " ".join(line[words[0][1]:words[1][0]]) + " " + 
+                                    self.CYAN + self.BOLD + 
+                                    " ".join(line[words[1][0]:words[1][1]]) + " " +  self.END + 
+                                    " ".join(line[words[1][1]:])
+                                    )
+                        elif len(words)==3:
+                            logger.debug(f'Three words {words}')
+                            print(self.CYAN + self.BOLD + 
+                                    " ".join(line[words[0][0]:words[0][1]]) + self.END + " " +  
+                                    " ".join(line[words[0][1]:words[1][0]]) + " " + 
+                                    self.CYAN + self.BOLD + 
+                                    " ".join(line[words[1][0]:words[1][1]]) + " " +  self.END + 
+                                    " ".join(line[words[1][1]:words[2][0]]) + " " +
+                                    self.CYAN + self.BOLD +
+                                    " ".join(line[words[2][0]:words[2][1]]) +                                 
+                                     self.END )
+                        else:
+                            # if the word is beginning after few positions
+                            if words[0][0] != 0:
+                                print(" ".join(line[0:words[0][0]]),end=' ')
+
+                            print(self.CYAN + self.BOLD +
+                                    " ".join(line[words[0][0]:words[0][1]]) + 
+                                    " " +  
+                                    self.END + 
+                                    " ".join(line[words[0][1]:])
+                                    )
 
         
 

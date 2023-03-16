@@ -15,36 +15,36 @@ class TestClockFace(TestCase):
 
     def test_time_oclock(self):
         time = self.timegen.get_words_from_time(h=1,m=00)
-        self.assertEqual(time,"one o'clock")
+        self.assertEqual(time,"it is one o'clock")
 
     def test_time_upper_case(self):
         self.timegen = TimeGenerator(case='upper',format='24')
         time = self.timegen.get_words_from_time(h=18,m=30)
-        self.assertEqual(time,"HALF PAST EIGHTEEN")
+        self.assertEqual(time,"IT IS HALF PAST EIGHTEEN")
 
     def test_half_past_one(self):
         time = self.timegen.get_words_from_time(h=1,m=30)
-        self.assertEqual(time,"half past one")
+        self.assertEqual(time,"it is half past one")
 
     def test_quarter_to_13_format_24(self):
         self.timegen = TimeGenerator(case='lower',format='24')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"quarter to thirteen")
+        self.assertEqual(time,"it is quarter to thirteen")
 
     def test_quarter_to_13_format_12(self):
         self.timegen = TimeGenerator(case='lower',format='12')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"quarter to one")
+        self.assertEqual(time,"it is quarter to one")
 
     def test_quarter_to_13_format_24_upper(self):
         self.timegen = TimeGenerator(case='upper',format='24')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"QUARTER TO THIRTEEN")
+        self.assertEqual(time,"IT IS QUARTER TO THIRTEEN")
 
     def test_quarter_to_13_format_12_upper(self):
         self.timegen = TimeGenerator(case='upper',format='12')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"QUARTER TO ONE")
+        self.assertEqual(time,"IT IS QUARTER TO ONE")
 
     def test_get_current_hour(self):
         current_hour = datetime.now().hour

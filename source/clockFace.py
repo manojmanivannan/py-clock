@@ -48,9 +48,9 @@ class TimeGenerator:
         elif m>=30: time_sentence = f"{self.nums[60 - m]} minutes to {self.nums[(h % 12) + 1]}"
 
         if self.case != 'lower':
-            return time_sentence.upper()
+            return ("it is "+time_sentence).upper()
         
-        return time_sentence
+        return ("it is "+time_sentence)
 
     def get_current_hour(self):
         return int(dt.now().hour)
