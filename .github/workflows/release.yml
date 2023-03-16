@@ -23,5 +23,14 @@ jobs:
                 python -m venv venv
                 source ./venv/bin/activate
                 python -m pip install -r requirements.txt
+            - name: Run PyTest
+              shell: bash
+              run: |
+                source ./venv/bin/activate
+                python -m pytest tests
+            - name: Install CLI tool
+              shell: bash
+              run: |
+                source ./venv/bin/activate
                 python setup.py install
                 py-clock -s -m -d
