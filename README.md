@@ -1,5 +1,6 @@
 # Py-Clock
 ![Pipeline](https://github.com/manojmanivannan/py-clock/actions/workflows/release.yml/badge.svg?branch=main)
+![Current](https://github.com/manojmanivannan/py-clock/actions/workflows/release.yml/badge.svg?event=push)
 
 A verbose clock which prints the time in words in a matrix
 
