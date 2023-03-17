@@ -13,7 +13,7 @@ with io.open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='py-text-clock',
     url='https://github.com/manojmanivannan/py-clock',
-    version='0.0.2',
+    version='{{VERSION_PLACEHOLDER}}',
     author='Manoj Manivannan',
     author_email='manojm18@live.in',
     description='A verbose Clock',
