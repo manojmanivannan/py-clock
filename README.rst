@@ -16,7 +16,7 @@ A clock made of words
       
 py-clock can print the current time in words format.
 
-For example: if the time is 13:50, it prints :red:`interpreted text`
+For example: if the time is 13:50, it prints 
         
     | **I T** L **I S** A S T H **T E N**
     | A C F I F T E E N D C O
