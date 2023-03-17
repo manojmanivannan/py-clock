@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-import codecs
+import io
 from os import path
 requirements = [l.strip() for l in open('requirements.txt').readlines()]
 
@@ -7,8 +7,8 @@ requirements = [l.strip() for l in open('requirements.txt').readlines()]
 
 here = path.abspath(path.dirname(__file__))
 
-with codecs.open(path.join(here, "README.md"), encoding="utf-8") as fh:
-    long_description = "\n" + fh.read()
+with io.open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 # This gets deployed when a new release is made by github actions
 VERSION = '{{VERSION_PLACEHOLDER}}'
