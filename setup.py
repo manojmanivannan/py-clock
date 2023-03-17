@@ -23,5 +23,6 @@ setup(
     'console_scripts': ['py-clock=source.command_line:main'],
     },
     install_requires=requirements,
+    setup_requires=['wheel','setuptools'],
     include_package_data=True,
 )
