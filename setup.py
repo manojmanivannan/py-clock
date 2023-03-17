@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-import io
+import codecs
 from os import path
 requirements = [l.strip() for l in open('requirements.txt').readlines()]
 
@@ -7,13 +7,16 @@ requirements = [l.strip() for l in open('requirements.txt').readlines()]
 
 here = path.abspath(path.dirname(__file__))
 
-with io.open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+with codecs.open(path.join(here, "README.md"), encoding="utf-8") as fh:
+    long_description = "\n" + fh.read()
+
+# This gets deployed when a new release is made by github actions
+VERSION = '{{VERSION_PLACEHOLDER}}'
 
 setup(
     name='py-text-clock',
     url='https://github.com/manojmanivannan/py-clock',
-    version='VERSION_PLACEHOLDER',
+    version=VERSION,
     author='Manoj Manivannan',
     author_email='manojm18@live.in',
     description='A verbose Clock',

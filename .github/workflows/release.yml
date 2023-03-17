@@ -55,7 +55,7 @@ jobs:
               if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
               run: |
                 echo "Setting tag name to ${{ env.TAG_NAME }}"
-                sed -i "s/VERSION_PLACEHOLDER/${{ env.TAG_NAME }}/g" setup.py
+                sed -i "s/{{VERSION_PLACEHOLDER}}/${{ env.TAG_NAME }}/g" setup.py
 
             - name: Generate distribution 📦
               if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
