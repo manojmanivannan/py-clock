@@ -98,7 +98,7 @@ class TimeFonts:
 
                 if each_word.lower() in ''.join(each_line).lower():
 
-                    logger.debug(f'MATCH found for "{each_word.lower()}" in {"".join(each_line).lower()}')
+                    logger.debug(f'MATCH found for "{each_word.upper()}" in {"".join(each_line).upper()}')
                     word_location = self.time_key_maps.get(each_word.lower())
 
                     if word_location is not None:
@@ -145,7 +145,7 @@ class TimeFonts:
         for line_no,line in enumerate(self.all_lines):
             # logger.debug(f'line #{line_no}: {line}')
             if line_no not in [s[0] for s in locations]:
-                logger.debug(f'{line_no} not required {locations}')
+                logger.debug(f'Line {line_no} not required {locations}')
                 print(" ".join(line))
             else:
                 for word_loc in locations:

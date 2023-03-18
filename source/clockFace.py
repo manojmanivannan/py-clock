@@ -18,6 +18,8 @@ class TimeGenerator:
             "twenty eight", "twenty nine"]
 
     def __init__(self,case='lower',format='12'):
+        logger.debug(f'Case set as {case}')
+        logger.debug(f'Format set as {format}')
         self.case = case
         self.format = format
 
@@ -31,11 +33,14 @@ class TimeGenerator:
         m: minute as integer 0<=m<60
         """
         if h is None:
+            logger.debug(f'Fetching current hour')
             h = self.get_current_hour()
         if m is None:
+            logger.debug(f'Fetching current minute')
             m = self.get_approximate_minute()
         
         if self.format=='12':
+            logger.debug(f'Converting to 12-hour format')
             if h > 12: h = h - 12
 
         if   m==0:  time_sentence = f"{self.nums[h]} o'clock"
