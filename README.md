@@ -40,6 +40,9 @@ The version used is Python 3.11.0
 ## Install the tool
 - `python setup.py install`
 
+## Install from PyPI
+- `pip install py-text-clock`
+
 ## Run tests
 This requires `pytest` to be installed.
 - `python -m pytest -v tests`
