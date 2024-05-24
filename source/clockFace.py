@@ -43,15 +43,19 @@ class TimeGenerator:
             logger.debug(f'Converting to 12-hour format')
             if h > 12: h = h - 12
 
-        if   m==0:  time_sentence = f"{self.nums[h]} o'clock"
-        elif m==1:  time_sentence = f"one minute past {self.nums[h]}"
-        elif m==59: time_sentence = f"one minute to {self.nums[(h % 12) + 1]}"
-        elif m==15: time_sentence = f"quarter past {self.nums[h]}"
-        elif m==30: time_sentence = f"half past {self.nums[h]}"
-        elif m==45: time_sentence = f"quarter to {self.nums[h]}"
-        elif m<=30: time_sentence = f"{self.nums[m]} minutes past {self.nums[h]}"
-        elif m>=30: time_sentence = f"{self.nums[60 - m]} minutes to {self.nums[(h % 12) + 1]}"
+        if   m==0:              time_sentence = f"{self.nums[h]} o'clock"
+        elif m>=1 and m<15:     time_sentence = f"ten minutes past {self.nums[h]}"
+        elif m>=15 and m<19:    time_sentence = f"quarter minutes past {self.nums[h]}"
+        elif m>=20 and m<29:    time_sentence = f"twenty minutes past {self.nums[h]}"
+        elif m==30:             time_sentence = f"half past {self.nums[h]}"
+        elif m>30 and m<=35:    time_sentence = f"twenty five minutes to {self.nums[(h % 12) + 1]}"
+        elif m>35 and m<45:     time_sentence = f"twenty minutes to {self.nums[(h % 12) + 1]}"
+        elif m==45:             time_sentence = f"quarter minutes to {self.nums[(h % 12) + 1]}"
+        elif m>45 and m<=50:    time_sentence = f"ten minutes to {self.nums[(h % 12) + 1]}"
+        elif m>=51 and m<59:    time_sentence = f"five minutes to {self.nums[(h % 12) + 1]}"
 
+
+        # time_sentence = "ten minutes past five"
         if self.case != 'lower':
             return ("it is "+time_sentence).upper()
         
