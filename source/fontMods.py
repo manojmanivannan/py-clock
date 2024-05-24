@@ -78,17 +78,16 @@ class TimeFonts:
 
     def get_word_locations(self):
         logger.debug(f'Showing matrix for "{self.time_sentence}"')
-        
+
         # from the time as sentence, take each word
         logger.debug(self.time_sentence.split(' '))
         self.word_locations = []
         for each_word in self.time_sentence.split(' '):
 
-
             # corner case
-            if each_word == 'quarter': each_word = 'fifteen'
-            if each_word == 'half': each_word = 'thirty'
-            if each_word == 'zero': each_word = 'twelve'
+            if each_word == 'QUARTER': each_word = 'FIFTEEN'
+            if each_word == 'HALF': each_word = 'THIRTY'
+            if each_word == 'ZERO': each_word = 'TWELVE'
 
             logger.debug(f'Checking word "{each_word}" in one {["".join(s) for s in self.all_lines]}')
             
