@@ -1,5 +1,5 @@
 from unittest import TestCase, TextTestRunner, defaultTestLoader
-from source.clockFace import TimeGenerator
+from py_text_clock.clockFace import TimeGenerator
 from datetime import  datetime
 
 class TestClockFace(TestCase):
