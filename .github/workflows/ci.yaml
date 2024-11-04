@@ -1,4 +1,4 @@
-name: release
+name: ci
 
 on:
   push:
@@ -7,9 +7,6 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+a[0-9]+"
       - "[0-9]+.[0-9]+.[0-9]+b[0-9]+"
       - "[0-9]+.[0-9]+.[0-9]+rc[0-9]+"
-      - "*"
-    branches:
-      - "*"
 
 env:
   PACKAGE_NAME: "py-clock"
@@ -19,14 +16,14 @@ jobs:
   details:
     runs-on: ubuntu-latest
     outputs:
-      new_version: ${{ steps.release.outputs.new_version }}
-      suffix: ${{ steps.release.outputs.suffix }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      new_version: ${{ steps.ci.outputs.new_version }}
+      suffix: ${{ steps.ci.outputs.suffix }}
+      tag_name: ${{ steps.ci.outputs.tag_name }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Extract tag and Details
-        id: release
+        id: ci
         run: |
           if [ "${{ github.ref_type }}" = "tag" ]; then
             TAG_NAME=${GITHUB_REF#refs/tags/}
@@ -43,35 +40,6 @@ jobs:
             exit 1
           fi
   
-  test_cli:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Setup Virtual Env
-        shell: bash
-        run: |
-          python -m venv venv
-          source ./venv/bin/activate
-          python -m pip install -r requirements.txt
-
-      - name: Run PyTest 🧪
-        shell: bash
-        run: |
-          source ./venv/bin/activate
-          python -m pytest -v tests
-
-      - name: Test CLI tool 🔧
-        shell: bash
-        run: |
-          source ./venv/bin/activate
-          python setup.py install
-          py-clock -s -m -d
 
   check_pypi:
     needs: [details]
@@ -80,7 +48,7 @@ jobs:
       - name: Fetch information from PyPI
         run: |
           response=$(curl -s https://pypi.org/pypi/${{ env.PACKAGE_NAME }}/json || echo "{}")
-          latest_previous_version=$(echo $response | grep -oP '"releases":\{"\K[^"]+' | sort -rV | head -n 1)
+          latest_previous_version=$(echo $response | grep -oP '"cis":\{"\K[^"]+' | sort -rV | head -n 1)
           if [ -z "$latest_previous_version" ]; then
             echo "Package not found on PyPI."
             latest_previous_version="0.0.0"
@@ -138,10 +106,10 @@ jobs:
           path: dist/
 
       - name: Publish distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@ci/v1
 
-  github_release:
-    name: Create GitHub Release
+  github_ci:
+    name: Create GitHub release
     needs: [setup_and_build, details]
     runs-on: ubuntu-latest
     permissions:
@@ -158,8 +126,8 @@ jobs:
           name: dist
           path: dist/
 
-      - name: Create GitHub Release
-        id: create_release
+      - name: Create GitHub ci
+        id: create_ci
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

@@ -1,0 +1,43 @@
+name: test
+
+on:
+  push:
+    tags:
+      - "*"
+    branches:
+      - "*"
+
+env:
+  PACKAGE_NAME: "py-clock"
+  OWNER: "manojmanivannan"
+
+jobs:
+  test_cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Setup Virtual Env
+        shell: bash
+        run: |
+          python -m venv venv
+          source ./venv/bin/activate
+          python -m pip install -r requirements.txt
+
+      - name: Run PyTest 🧪
+        shell: bash
+        run: |
+          source ./venv/bin/activate
+          python -m pytest -v tests
+
+      - name: Test CLI tool 🔧
+        shell: bash
+        run: |
+          source ./venv/bin/activate
+          python setup.py install
+          py-clock -s -m -d
