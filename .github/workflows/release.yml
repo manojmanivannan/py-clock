@@ -42,8 +42,8 @@ jobs:
             echo "No tag found"
             exit 1
           fi
+  
   test_cli:
-    needs: [details]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -74,7 +74,7 @@ jobs:
           py-clock -s -m -d
 
   check_pypi:
-    needs: [details,test_cli]
+    needs: [details]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch information from PyPI
