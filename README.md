@@ -1,6 +1,6 @@
 # Py-Clock
 ![Pipeline](https://github.com/manojmanivannan/py-clock/actions/workflows/release.yml/badge.svg?branch=main)
-[![latest tag](https://img.shields.io/github/v/tag/manojmanivannan/py-clock.svg?label=latest%20tag&sort=semver)](https://pypi.org/project/py-text-clock/)
+[![latest tag](https://img.shields.io/github/v/tag/manojmanivannan/py-clock.svg?label=latest%20tag&sort=semver)](https://pypi.org/project/py-clock/)
 
 A verbose clock which prints the time in words in a matrix
 
@@ -41,7 +41,7 @@ The version used is Python 3.11.0
 - `python setup.py install`
 
 ## Install from PyPI
-- `pip install py-text-clock`
+- `pip install py-clock`
 
 ## Run tests
 This requires `pytest` to be installed.
