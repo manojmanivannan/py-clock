@@ -33,21 +33,16 @@ T E N S E Z O' C L O C K
 
 
 ## Setup Env
-The version used is Python 3.11.0
-- `python -m venv venv`
-- `source ./ven/bin/activate` for linux or `.\venv\Scripts\activate` for windows
-
-## Install the tool
-- `python setup.py install`
+Make sure you have Python and the `poetry` package install. From inside the project directory
+- `poetry shell` ( this will create a new virtual env and activate it)
+- `poetry install` ( this will install dependencies)
 
 ## Install from PyPI
-- `pip install py-clock`
+- `pip install py-text-clock`
 
-## Run tests
-This requires `pytest` to be installed.
-- `python -m pytest -v tests`
 
 # Use the tool
+After activating the virtual env,
 ```bash
 (venv) C:\Users\manoj\Documents\MANOJ\Github\py-clock>py-clock -s -m
 ```
