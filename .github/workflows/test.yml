@@ -37,4 +37,4 @@ jobs:
 
       - name: Test CLI tool 🔧
         shell: bash
-        run: py-clock -s -m -d
+        run: poetry run py-clock -s -m -d
