@@ -5,7 +5,7 @@ pythonpath = [
 
 [tool.poetry]
 name = "py-text-clock"
-version = "0.3.1"
+version = "0.3.2"
 description = "A verbose Clock"
 authors = ["Manoj Manivannan <manojm18@live.in>"]
 readme = "README.md"
