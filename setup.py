@@ -14,7 +14,7 @@ with io.open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 VERSION = '{{VERSION_PLACEHOLDER}}'
 
 setup(
-    name='py-clock',
+    name='py-text-clock',
     url='https://github.com/manojmanivannan/py-clock',
     version=VERSION,
     author='Manoj Manivannan',
