@@ -4,10 +4,9 @@ on:
   push:
     branches:
       - "*"
-
-env:
-  PACKAGE_NAME: "py-clock"
-  OWNER: "manojmanivannan"
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
   test_cli:
