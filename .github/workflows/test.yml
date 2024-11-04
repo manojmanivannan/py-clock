@@ -18,23 +18,23 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-
-      - name: Setup Virtual Env
-        shell: bash
+      - name: Install Poetry
         run: |
-          python -m venv venv
-          source ./venv/bin/activate
-          python -m pip install -r requirements.txt
+            curl -sSL https://install.python-poetry.org | python3 -
+            echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Set project version with Poetry
+        run: |
+            poetry version ${{ needs.details.outputs.new_version }}
+  
+      - name: Install dependencies
+        run: poetry install --sync --no-interaction
 
       - name: Run PyTest 🧪
         shell: bash
         run: |
-          source ./venv/bin/activate
-          python -m pytest -v tests
+          poetry run python -m pytest -v tests
 
       - name: Test CLI tool 🔧
         shell: bash
-        run: |
-          source ./venv/bin/activate
-          python setup.py install
-          py-clock -s -m -d
+        run: py-clock -s -m -d
