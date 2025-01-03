@@ -28,9 +28,9 @@ class TimeFonts:
     #          0   1   2   3   4   5   6    7   8   9   10  11  12
     line0 =  ["I","T","L","I","S","A","S", "T","H","T","E","N"," "]
     line1 =  ["A","C","F","I","F","T","E", "E","N","D","C","O"," "]
-    line2 =  ["T","W","E","N","T","Y","X", "D","I","V","E","W"," "]
+    line2 =  ["T","W","E","N","T","Y","X", "F","I","V","E","W"," "]
     line3 =  ["T","H","I","R","T","Y","F", "T","E","N","O","S"," "]
-    line4 =  ["M","I","N","U","T","E","S", "E","T","O","U","R"," "]
+    line4 =  ["R","M","I","N","U","T","E","S", "E","T","O","U"," "]
     line5 =  ["P","A","S","T","O","R","U", "F","O","U","R","T"," "]
     line6 =  ["S","E","V","E","N","X","T", "W","E","L","V","E"," "]
     line7 =  ["N","I","N","E","F","I","V", "E","C","T","W","O"," "]
@@ -47,7 +47,7 @@ class TimeFonts:
         'two'       : [7,   9,  -1],
         'three'     : [9,   3,  8],
         'four'      : [5,   7,  11],
-        'five'      : [7,   4,  8],
+        'five'      : [2,   7,  11],
         'six'       : [9,   0,  3],
         'seven'     : [6,   0,  5],
         'nine'      : [7,   0,  4],
@@ -60,19 +60,22 @@ class TimeFonts:
         'twenty'    : [2,   0,  6],
         'thirty'    : [3,   0,  6],
         'half'      : [3,   0,  6],
-        'minutes'   : [4,   0,  7],
+        'minutes'   : [4,   1,  8],
         'past'      : [5,   0,  4],
         'to'        : [4,   8,  10],
         "o'clock"   : [10,  6,  12]
-
-        
+    }
+    
+    time_key_maps_secondary = {
+        'five'      : [7, 4, 8],
+        'ten'       : [10, 0, 3],
     }
 
     def __init__(self,time_sentence) -> None:
         self.time_sentence = time_sentence
         # self.time_sentence = "it is ten minutes to twelve"
         # self.time_sentence = "it is ten o'clock"
-        # self.time_sentence = "it is five minutes past zero"
+        # self.time_sentence = "it is twenty five minutes past ZERO"
         # self.time_sentence = "it is zero o'clock"
         self.get_word_locations()
 
@@ -82,6 +85,8 @@ class TimeFonts:
         # from the time as sentence, take each word
         logger.debug(self.time_sentence.split(' '))
         self.word_locations = []
+        
+        self.time_sentence = self.time_sentence.replace('QUARTER','FIFTEEN MINUTES').replace('HALF','THIRTY MINUTES').replace('ZERO','TWELVE')
         for each_word in self.time_sentence.split(' '):
 
             # corner case
@@ -91,14 +96,20 @@ class TimeFonts:
 
             logger.debug(f'Checking word "{each_word}" in one {["".join(s) for s in self.all_lines]}')
             
-
+            word_location = None
             # check that word in each line
             for each_line in self.all_lines:
 
                 if each_word.lower() in ''.join(each_line).lower():
 
                     logger.debug(f'MATCH found for "{each_word.upper()}" in {"".join(each_line).upper()}')
-                    word_location = self.time_key_maps.get(each_word.lower())
+                    word_location_new = self.time_key_maps.get(each_word.lower())
+                    
+                    # if a given word appears in multiple sentences, then check for secondary location
+                    if word_location_new == word_location and self.time_sentence.lower().split(' ').count(each_word.lower()) > 1:
+                        word_location = self.time_key_maps_secondary.get(each_word.lower())
+                    else:
+                        word_location = word_location_new
 
                     if word_location is not None:
                         logger.debug(f'Appending location of "{each_word.lower()}":{word_location}')
