@@ -56,5 +56,9 @@ S E V E N X T W E L V E\
 N I N E D I V E C T W O\
 E I G H T F E L E V E N\
 S I X T H R E E **O N E** G\
-T E N S E Z O' C L O C K\
-```
+T E N S E Z O' C L O C K
+
+# Release method
+
+1. `git tag <x.x.x>`
+2. `git push origin <x.x.x>` 
