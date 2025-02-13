@@ -1,23 +1,27 @@
+# pyproject.toml
+
 [tool.pytest.ini_options]
 pythonpath = [
   "py_text_clock"
 ]
 
-[tool.poetry]
+[project]
 name = "py-text-clock"
 version = "0.3.2"
 description = "A verbose Clock"
-authors = ["Manoj Manivannan <manojm18@live.in>"]
+authors = [
+  { name = "Manoj Manivannan", email = "manojm18@live.in" }
+]
 readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pytest>=7.4.0",
+  "click>=8.1.7"
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-pytest = "^7.4.0"
-click = "^8.1.7"
-
-[tool.poetry.scripts]
+[project.scripts]
 py-clock = "py_text_clock.command_line:main"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
