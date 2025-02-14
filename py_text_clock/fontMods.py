@@ -30,7 +30,7 @@ class TimeFonts:
     line1 =  ["A","C","F","I","F","T","E", "E","N","D","C","O"," "]
     line2 =  ["T","W","E","N","T","Y","X", "F","I","V","E","W"," "]
     line3 =  ["T","H","I","R","T","Y","F", "T","E","N","O","S"," "]
-    line4 =  ["R","M","I","N","U","T","E","S", "E","T","O","U"," "]
+    line4 =  ["M","I","N","U","T","E", "S","E","R","T","O","U"," "]
     line5 =  ["P","A","S","T","O","R","U", "F","O","U","R","T"," "]
     line6 =  ["S","E","V","E","N","X","T", "W","E","L","V","E"," "]
     line7 =  ["N","I","N","E","F","I","V", "E","C","T","W","O"," "]
@@ -60,9 +60,9 @@ class TimeFonts:
         'twenty'    : [2,   0,  6],
         'thirty'    : [3,   0,  6],
         'half'      : [3,   0,  6],
-        'minutes'   : [4,   1,  8],
+        'minutes'   : [4,   0,  7],
         'past'      : [5,   0,  4],
-        'to'        : [4,   8,  10],
+        'to'        : [4,   9,  11],
         "o'clock"   : [10,  6,  12]
     }
     
@@ -156,7 +156,7 @@ class TimeFonts:
             # logger.debug(f'line #{line_no}: {line}')
             if line_no not in [s[0] for s in locations]:
                 logger.debug(f'Line {line_no} not required {locations}')
-                print(" ".join(line))
+                print("".join(line))
             else:
                 for word_loc in locations:
                     if word_loc[0] == line_no:
@@ -165,33 +165,33 @@ class TimeFonts:
                         if len(words)==2:
                             logger.debug(f'Two words {words}')
                             print(self.CYAN + self.BOLD + 
-                                    " ".join(line[words[0][0]:words[0][1]]) + self.END + " " +  
-                                    " ".join(line[words[0][1]:words[1][0]]) + " " + 
+                                    "".join(line[words[0][0]:words[0][1]]) + self.END + "" +  
+                                    "".join(line[words[0][1]:words[1][0]]) + "" + 
                                     self.CYAN + self.BOLD + 
-                                    " ".join(line[words[1][0]:words[1][1]]) + " " +  self.END + 
-                                    " ".join(line[words[1][1]:])
+                                    "".join(line[words[1][0]:words[1][1]]) + "" +  self.END + 
+                                    "".join(line[words[1][1]:])
                                     )
                         elif len(words)==3:
                             logger.debug(f'Three words {words}')
                             print(self.CYAN + self.BOLD + 
-                                    " ".join(line[words[0][0]:words[0][1]]) + self.END + " " +  
-                                    " ".join(line[words[0][1]:words[1][0]]) + " " + 
+                                    "".join(line[words[0][0]:words[0][1]]) + self.END + "" +  
+                                    "".join(line[words[0][1]:words[1][0]]) + "" + 
                                     self.CYAN + self.BOLD + 
-                                    " ".join(line[words[1][0]:words[1][1]]) + " " +  self.END + 
-                                    " ".join(line[words[1][1]:words[2][0]]) + " " +
+                                    "".join(line[words[1][0]:words[1][1]]) + "" +  self.END + 
+                                    "".join(line[words[1][1]:words[2][0]]) + "" +
                                     self.CYAN + self.BOLD +
-                                    " ".join(line[words[2][0]:words[2][1]]) +                                 
+                                    "".join(line[words[2][0]:words[2][1]]) +                                 
                                      self.END )
                         else:
                             # if the word is beginning after few positions
                             if words[0][0] != 0:
-                                print(" ".join(line[0:words[0][0]]),end=' ')
+                                print("".join(line[0:words[0][0]]),end='')
 
                             print(self.CYAN + self.BOLD +
-                                    " ".join(line[words[0][0]:words[0][1]]) + 
-                                    " " +  
+                                    "".join(line[words[0][0]:words[0][1]]) + 
+                                    "" +  
                                     self.END + 
-                                    " ".join(line[words[0][1]:])
+                                    "".join(line[words[0][1]:])
                                     )
 
         
