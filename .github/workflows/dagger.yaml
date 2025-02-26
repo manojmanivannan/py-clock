@@ -17,7 +17,6 @@ jobs:
         with:
           version: "latest"
           verb: call
-          module: github.com/shykes/daggerverse/hello@v0.1.2
           args: test --source=./py_text_clock --test=./tests
           # assumes the Dagger Cloud token is in
           # a repository secret named DAGGER_CLOUD_TOKEN
