@@ -1,0 +1,8 @@
+{
+  "name": "py-clock",
+  "engineVersion": "v0.16.1",
+  "sdk": {
+    "source": "python"
+  },
+  "source": "dagger"
+}
