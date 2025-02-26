@@ -9,14 +9,17 @@ on:
 
 jobs:
   hello:
-    name: hello
+    name: dagger-test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Call Dagger Function
         uses: dagger/dagger-for-github@8.0.0
         with:
           version: "latest"
-          call: test --source=./py_text_clock --test=./tests
+          verb: call
+          args: test --source=./py_text_clock --test=./tests
           # assumes the Dagger Cloud token is in
           # a repository secret named DAGGER_CLOUD_TOKEN
           # set via the GitHub UI/CLI
