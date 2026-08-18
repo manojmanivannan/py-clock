@@ -1,4 +1,7 @@
 from .mylogger import logger
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
 
 # 0   ITLISASTHTEN
 # 1   ACFIFTEENDCO
@@ -139,56 +142,36 @@ class TimeFonts:
         return new_list
 
 
-    def show(self):
-        
-        # self.word_locations = [[0, 0, 2], [0, 3, 5], [0,   9,  12], [10, 0, 3], [4, 0, 7], [4, 8, 10], [10, 0, 3]]
-        # self.word_locations = [[0, 0, 2], [0, 3, 5], [3,   0,  6],[5, 0, 4], [8, 6, 12]]
-        # [[0, [0, 2], [3, 5]], [10, [0, 3], [0, 3]], [4, [0, 7], [8, 10]]]
+    def generate_panel(self) -> Panel:
         locations = self.clean_locations(self.word_locations)
-
-        for line_no,line in enumerate(self.all_lines):
-            # logger.debug(f'line #{line_no}: {line}')
-            if line_no not in [s[0] for s in locations]:
-                logger.debug(f'Line {line_no} not required {locations}')
-                print(" ".join(line))
-            else:
-                for word_loc in locations:
-                    if word_loc[0] == line_no:
-                        logger.debug(f'{word_loc}')
-                        words = word_loc[1:]
-                        if len(words)==2:
-                            logger.debug(f'Two words {words}')
-                            print(self.CYAN + self.BOLD + 
-                                    " ".join(line[words[0][0]:words[0][1]]) + self.END + " " +  
-                                    " ".join(line[words[0][1]:words[1][0]]) + " " + 
-                                    self.CYAN + self.BOLD + 
-                                    " ".join(line[words[1][0]:words[1][1]]) + " " +  self.END + 
-                                    " ".join(line[words[1][1]:])
-                                    )
-                        elif len(words)==3:
-                            logger.debug(f'Three words {words}')
-                            print(self.CYAN + self.BOLD + 
-                                    " ".join(line[words[0][0]:words[0][1]]) + self.END + " " +  
-                                    " ".join(line[words[0][1]:words[1][0]]) + " " + 
-                                    self.CYAN + self.BOLD + 
-                                    " ".join(line[words[1][0]:words[1][1]]) + " " +  self.END + 
-                                    " ".join(line[words[1][1]:words[2][0]]) + " " +
-                                    self.CYAN + self.BOLD +
-                                    " ".join(line[words[2][0]:words[2][1]]) +                                 
-                                     self.END )
-                        else:
-                            # if the word is beginning after few positions
-                            if words[0][0] != 0:
-                                print(" ".join(line[0:words[0][0]]),end=' ')
-
-                            print(self.CYAN + self.BOLD +
-                                    " ".join(line[words[0][0]:words[0][1]]) + 
-                                    " " +  
-                                    self.END + 
-                                    " ".join(line[words[0][1]:])
-                                    )
-
+        # Create a dictionary for quick lookup of word ranges per line
+        loc_dict = {loc[0]: loc[1:] for loc in locations}
         
+        grid_text = Text()
+        
+        for line_no, line in enumerate(self.all_lines):
+            ranges = loc_dict.get(line_no, [])
+            
+            # The last element in each line list is ' ', we can ignore it if we are adding our own spacing
+            actual_chars = line[:-1]
+            
+            for char_idx, char in enumerate(actual_chars):
+                # Check if char_idx is within any range
+                is_highlighted = any(start <= char_idx < end for start, end in ranges)
+                
+                style = "bold cyan" if is_highlighted else "dim"
+                grid_text.append(char, style=style)
+                
+                # Add a space between characters for better grid readability
+                if char_idx < len(actual_chars) - 1:
+                    grid_text.append(" ")
+            
+            if line_no < len(self.all_lines) - 1:
+                grid_text.append("\n")
+                
+        return Panel(grid_text, title="Py-Clock", expand=False, border_style="blue")
 
-                        
+    def show(self):
+        console = Console()
+        console.print(self.generate_panel())
             

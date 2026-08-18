@@ -78,6 +78,17 @@ class TimeGenerator:
     def print_time(self):
         print(TimeFonts.BOLD + self.get_words_from_time() + TimeFonts.END)
 
-    def print_time_matrix(self):
-        matrix = TimeFonts(time_sentence=self.get_words_from_time())
-        matrix.show()
+    def print_time_matrix(self, live=False):
+        if not live:
+            matrix = TimeFonts(time_sentence=self.get_words_from_time())
+            matrix.show()
+        else:
+            from rich.live import Live
+            with Live(TimeFonts(time_sentence=self.get_words_from_time()).generate_panel(), refresh_per_second=1) as live_view:
+                try:
+                    while True:
+                        sleep(1)
+                        matrix = TimeFonts(time_sentence=self.get_words_from_time())
+                        live_view.update(matrix.generate_panel())
+                except KeyboardInterrupt:
+                    pass
