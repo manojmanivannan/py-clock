@@ -53,6 +53,43 @@ $ py-clock -s -a -l   # Live updating analog clock
 ```
 (Starts a continuously updating TUI clock that refreshes every second)
 
+#### Analog
+```bash
+$ py-clock -s -a -l
+╭───────── Analog Clock ──────────╮
+│               12                │
+│        11             1         │
+│                                 │
+│   10                       2    │
+│             H                   │
+│              H        MMM       │
+│               H   MMMM          │
+│  9             OMM           3  │
+│               .                 │
+│               .                 │
+│              .             4    │
+│    8        .                   │
+│             .                   │
+│         7  .          5         │
+│                6                │
+╰─────────────────────────────────╯
+$
+```
+#### Matrix
+<pre><code>$ py-clock -s -m
+╭──────── Py-Clock ────────╮
+│ <b>I T</b> L <b>I S</b> A S T H <b>T E N</b>  │
+│ A C F I F T E E N D C O  │
+│ T W E N T Y X F I V E W  │
+│ T H I R T Y F T E N O S  │
+│ R <b>M I N U T E S</b> E T O U  │
+│ <b>P A S T</b> O R U F O U R T  │
+│ S E V E N X T W E L V E  │
+│ N I N E F I V E C T W O  │
+│ E I G H T F <b>E L E V E N</b>  │
+│ S I X T H R E E O N E G  │
+│ T E N S E Z O' C L O C K │
+╰──────────────────────────╯</code></pre>
 
 ## Local Development Setup
 
