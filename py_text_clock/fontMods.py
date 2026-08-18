@@ -65,7 +65,7 @@ class TimeFonts:
         'half'      : [3,   0,  6],
         'minutes'   : [4,   1,  8],
         'past'      : [5,   0,  4],
-        'to'        : [4,   8,  10],
+        'to'        : [4,   9,  11],
         "o'clock"   : [10,  6,  12]
     }
     
