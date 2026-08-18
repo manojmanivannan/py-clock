@@ -20,6 +20,8 @@ Usage: py-clock [OPTIONS]
 Options:
   -s, --show    Show the current time
   -m, --matrix  Show time as matrix
+  -a, --analog  Show time as analog clock
+  -l, --live    Run continuously as a TUI app (with --matrix or --analog)
   -d, --debug   Run in debug mode
   -h, --help    Show this message and exit.
 ```
@@ -36,17 +38,20 @@ IT IS TWENTY FIVE MINUTES TO FOUR
 ```bash
 $ py-clock -s -m
 ```
-**I T** L **I S** A S T H T E N<br>
-A C F I F T E E N D C O<br>
-**T W E N T Y** X **F I V E** W<br>
-T H I R T Y F T E N O S<br>
-**M I N U T E S** E **T O** U R<br>
-P A S T O R U **F O U R** T<br>
-S E V E N X T W E L V E<br>
-N I N E D I V E C T W O<br>
-E I G H T F E L E V E N<br>
-S I X T H R E E O N E G<br>
-T E N S E Z O' C L O C K
+(Displays the time highlighted within a beautifully styled Rich TUI matrix panel)
+
+**Show current time as an analog clock:**
+```bash
+$ py-clock -s -a
+```
+(Displays the time on an analog clock face rendered in the terminal)
+
+**Run continuously (Live Mode):**
+```bash
+$ py-clock -s -m -l   # Live updating matrix clock
+$ py-clock -s -a -l   # Live updating analog clock
+```
+(Starts a continuously updating TUI clock that refreshes every second)
 
 
 ## Local Development Setup
