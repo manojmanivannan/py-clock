@@ -44,15 +44,15 @@ class TimeFonts:
         'it'        : [0,   0,  2],
         'is'        : [0,   3,  5],
         'one'       : [9,   8,  11],
-        'two'       : [7,   9,  -1],
+        'two'       : [7,   9,  12],
         'three'     : [9,   3,  8],
         'four'      : [5,   7,  11],
         'five'      : [2,   7,  11],
         'six'       : [9,   0,  3],
         'seven'     : [6,   0,  5],
+        'eight'     : [8,   0,  5],
         'nine'      : [7,   0,  4],
         'ten'       : [0,   9,  12],
-        'TEN'       : [10,  0,  3],
         'eleven'    : [8,   6,  12],
         'twelve'    : [6,   6,  12],
         'fifteen'   : [1,   2,  9],
@@ -82,42 +82,36 @@ class TimeFonts:
     def get_word_locations(self):
         logger.debug(f'Showing matrix for "{self.time_sentence}"')
 
-        # from the time as sentence, take each word
-        logger.debug(self.time_sentence.split(' '))
         self.word_locations = []
+        words = self.time_sentence.lower().split(' ')
         
-        self.time_sentence = self.time_sentence.replace('QUARTER','FIFTEEN MINUTES').replace('HALF','THIRTY MINUTES').replace('ZERO','TWELVE')
-        for each_word in self.time_sentence.split(' '):
-
-            # corner case
-            if each_word == 'QUARTER': each_word = 'FIFTEEN'
-            if each_word == 'HALF': each_word = 'THIRTY'
-            if each_word == 'ZERO': each_word = 'TWELVE'
-
-            logger.debug(f'Checking word "{each_word}" in one {["".join(s) for s in self.all_lines]}')
+        past_to_idx = -1
+        if 'past' in words:
+            past_to_idx = words.index('past')
+        elif 'to' in words:
+            past_to_idx = words.index('to')
             
+        for i, each_word in enumerate(words):
             word_location = None
-            # check that word in each line
-            for each_line in self.all_lines:
-
-                if each_word.lower() in ''.join(each_line).lower():
-
-                    logger.debug(f'MATCH found for "{each_word.upper()}" in {"".join(each_line).upper()}')
-                    word_location_new = self.time_key_maps.get(each_word.lower())
-                    
-                    # if a given word appears in multiple sentences, then check for secondary location
-                    if word_location_new == word_location and self.time_sentence.lower().split(' ').count(each_word.lower()) > 1:
-                        word_location = self.time_key_maps_secondary.get(each_word.lower())
+            if each_word in self.time_key_maps:
+                if each_word in self.time_key_maps_secondary:
+                    is_hour = False
+                    if past_to_idx == -1:
+                        is_hour = True
+                    elif i > past_to_idx:
+                        is_hour = True
+                        
+                    if is_hour:
+                        word_location = self.time_key_maps_secondary[each_word]
                     else:
-                        word_location = word_location_new
-
-                    if word_location is not None:
-                        logger.debug(f'Appending location of "{each_word.lower()}":{word_location}')
-                        self.word_locations.append(word_location)
-
-                    # if match is found break
-                    break
-            logger.debug(f'--------------------------------------')
+                        word_location = self.time_key_maps[each_word]
+                else:
+                    word_location = self.time_key_maps[each_word]
+                    
+            if word_location is not None:
+                logger.debug(f'Appending location of "{each_word}":{word_location}')
+                self.word_locations.append(word_location)
+        logger.debug(f'--------------------------------------')
     
     def clean_locations(self,locations):
 

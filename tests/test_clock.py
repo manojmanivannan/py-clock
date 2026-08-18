@@ -29,27 +29,27 @@ class TestClockFace(TestCase):
     def test_quarter_to_13_format_24(self):
         self.timegen = TimeGenerator(case='lower',format='24')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"it is quarter minutes to two")
+        self.assertEqual(time,"it is quarter to two")
 
     def test_quarter_to_13_format_12(self):
         self.timegen = TimeGenerator(case='lower',format='12')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"it is quarter minutes to two")
+        self.assertEqual(time,"it is quarter to two")
 
     def test_quarter_to_4_format_12(self):
         self.timegen = TimeGenerator(case='lower',format='12')
         time = self.timegen.get_words_from_time(h=3,m=45)
-        self.assertEqual(time,"it is quarter minutes to four")
+        self.assertEqual(time,"it is quarter to four")
 
     def test_quarter_to_13_format_24_upper(self):
         self.timegen = TimeGenerator(case='upper',format='24')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"IT IS QUARTER MINUTES TO TWO")
+        self.assertEqual(time,"IT IS QUARTER TO TWO")
 
     def test_quarter_to_13_format_12_upper(self):
         self.timegen = TimeGenerator(case='upper',format='12')
         time = self.timegen.get_words_from_time(h=13,m=45)
-        self.assertEqual(time,"IT IS QUARTER MINUTES TO TWO")
+        self.assertEqual(time,"IT IS QUARTER TO TWO")
 
     def test_get_current_hour(self):
         current_hour = datetime.now().hour
