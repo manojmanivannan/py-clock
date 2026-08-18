@@ -74,6 +74,9 @@ class TimeGenerator:
 
     def get_current_minute(self):
         return int(dt.now().minute)
+        
+    def get_current_second(self):
+        return int(dt.now().second)
 
     def print_time(self):
         print(TimeFonts.BOLD + self.get_words_from_time() + TimeFonts.END)
@@ -90,5 +93,21 @@ class TimeGenerator:
                         sleep(1)
                         matrix = TimeFonts(time_sentence=self.get_words_from_time())
                         live_view.update(matrix.generate_panel())
+                except KeyboardInterrupt:
+                    pass
+
+    def print_time_analog(self, live=False):
+        from .analogFace import AnalogClock
+        if not live:
+            clock = AnalogClock(self.get_current_hour(), self.get_current_minute(), self.get_current_second())
+            clock.show()
+        else:
+            from rich.live import Live
+            with Live(AnalogClock(self.get_current_hour(), self.get_current_minute(), self.get_current_second()).generate_panel(), refresh_per_second=1) as live_view:
+                try:
+                    while True:
+                        sleep(1)
+                        clock = AnalogClock(self.get_current_hour(), self.get_current_minute(), self.get_current_second())
+                        live_view.update(clock.generate_panel())
                 except KeyboardInterrupt:
                     pass
